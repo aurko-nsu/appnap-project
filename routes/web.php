@@ -7,5 +7,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/login' , [Controller::class, 'login']);
-Route::get('/register' , [Controller::class, 'registration']);
+Route::get('/login' , [Controller::class, 'login'])->middleware('alreadyLogged');
+Route::get('/register' , [Controller::class, 'registration'])->middleware('alreadyLogged');
+Route::post('/register-user' , [Controller::class, 'register_user'])->name('register-user');
+Route::post('/login-user' , [Controller::class, 'login_user'])->name('login-user');
+Route::get('/profile' , [Controller::class, 'profile'])->middleware('isLoggedIn');
+Route::get('/logout' , [Controller::class, 'logout']);
