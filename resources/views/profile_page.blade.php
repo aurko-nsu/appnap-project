@@ -9,11 +9,43 @@
 </head>
 <body>
 <div class="container">
+<nav class="navbar navbar-expand-lg bg-light">
+    <div class="container-fluid">
+        <div class="collapse navbar-collapse" id="navbarText">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">Products</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link" href="#">Add Products</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link" href="#">Profile</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link" href="#">Logout</a>
+            </li>
+        </ul>
+        <span class="navbar-text">
+            Welcome {{$data->name}}
+        </span>
+        </div>
+    </div>
+</nav>
+
     <div class="row">
-        <div class="col-md-6 col-md-offset-8">
-            <h3>Profile</h3>
-            <h3>{{$data->name}}</h3>
-            <a href="logout">Logout</a>
+        <div class="col-md-8">
+            <div class="card" style="width: 18rem;">
+                <img src="..." class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title">Card title</h5>
+                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                  <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            
         </div>
     </div>
 </div>
