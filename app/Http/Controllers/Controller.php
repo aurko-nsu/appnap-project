@@ -15,12 +15,16 @@ class Controller extends BaseController
 {
     public function registration()
     {
-        return view('register_page');
+        $data['title'] = 'Registration Page';
+        $data['view_page'] = 'register_page';
+        return view('frame' , $data);
     }
 
     public function login()
     {
-        return view('login_page');
+        $data['title'] = 'Login Page';
+        $data['view_page'] = 'login_page';
+        return view('frame' , $data);
     }
 
     public function register_user(Request $request)
@@ -67,18 +71,20 @@ class Controller extends BaseController
 
     public function profile()
     {
-        $data = array();
-        if(Session::has('login_id'))
-        {
-            $data = Users::where('id' , '=' , Session::get('login_id'))->first();
-        }
-        return view('profile_page' , compact('data'));
+        $data['user'] = Users::where('id' , '=' , Session::get('login_id'))->first();
+        return view('profile_page' , $data);
     }
 
     public function logout()
     {
         if(Session::has('login_id'))
             Session::pull('login_id');
-        return redirect('login')->with('success' , 'Logged Out');
+        return redirect('login')->with('success' , 'Logged Out! We are gonna miss you!');
+    }
+
+    public function add_product()
+    {
+        $data['user'] = Users::where('id' , '=' , Session::get('login_id'))->first();
+        return view('add_product' , $data);
     }
 }

@@ -12,4 +12,5 @@ Route::get('/register' , [Controller::class, 'registration'])->middleware('alrea
 Route::post('/register-user' , [Controller::class, 'register_user'])->name('register-user');
 Route::post('/login-user' , [Controller::class, 'login_user'])->name('login-user');
 Route::get('/profile' , [Controller::class, 'profile'])->middleware('isLoggedIn');
+Route::get('/add_product' , [Controller::class, 'add_product'])->middleware('isLoggedIn');
 Route::get('/logout' , [Controller::class, 'logout']);
