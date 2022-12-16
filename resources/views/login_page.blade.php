@@ -3,12 +3,7 @@
         <div class="col-md-6 col-md-offset-8">
             <h3>Login Form</h3>
             <form action="{{route('login-user')}}" method="post">
-                @if(Session::has('success'))
-                <div class="alert alert-success">{{Session::get('success')}}</div>
-                @endif
-                @if(Session::has('error'))
-                <div class="alert alert-danger">{{Session::get('error')}}</div>
-                @endif
+                {{view('session_alert')}}
                 @csrf
                 <div class="form-group">
                     <label for="email" class="form-label">Email</label>
