@@ -8,6 +8,7 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Http\Request;
 use App\Models\Users;
+use App\Models\Product;
 use Hash;
 use Session;
 
@@ -82,9 +83,33 @@ class Controller extends BaseController
         return redirect('login')->with('success' , 'Logged Out! We are gonna miss you!');
     }
 
-    public function add_product()
+    public function add_product_page()
     {
         $data['user'] = Users::where('id' , '=' , Session::get('login_id'))->first();
         return view('add_product' , $data);
+    }
+
+    public function add_product(Request $request)
+    {
+        $request->validate([
+            'name' => 'required',
+            'slug' => 'required',
+            'price' => 'required',
+            'category' => 'required',
+            'brand' => 'required'
+        ]);
+        $product = new Product();
+        $product->name = $request->name;
+        $product->slug = $request->slug;
+        $product->price = $request->price;
+        $product->category = $request->category;
+        $product->brand = $request->brand;
+        $product->picture = 'kichuna';
+        $update = $product->save();
+
+        if($update)
+            return back()->with('success' , 'Product Uploaded');
+        else
+            return back()->with('error' , 'Upload Failed');
     }
 }

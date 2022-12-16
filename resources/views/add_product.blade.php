@@ -34,7 +34,7 @@
     </div>
 </nav>
 
-<form method="POST" action="" enctype="multipart/form-data">
+<form method="POST" action="{{route('add-product')}}" enctype="multipart/form-data">
     <h3 class="heading">Add your products</h3>
     {{view('session_alert')}}
     @csrf
