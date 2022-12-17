@@ -9,6 +9,7 @@ use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Http\Request;
 use App\Models\Users;
 use App\Models\Product;
+use App\Models\Product_picture;
 use Hash;
 use Session;
 
@@ -100,13 +101,26 @@ class Controller extends BaseController
         ]);
         $product = new Product();
         $product->name = $request->name;
+        $product->user_id = Session::get('login_id');
         $product->slug = $request->slug;
         $product->price = $request->price;
         $product->category = $request->category;
         $product->brand = $request->brand;
-        $product->picture = 'kichuna';
         $update = $product->save();
-
+        
+        if($request->file('images'))
+            {
+                $image_path = public_path('product_images'.'/'.Session::get('login_id').'/'.$product->id);
+                foreach(($request->file('images')) as $file)
+                {
+                    $fileName = $file->getClientOriginalName();
+                    $file->move($image_path , $fileName);
+                    Product_picture::create([
+                        'product_id'=>$product->id,
+                        'picture'=>$fileName
+                    ]);
+                }                
+            }
         if($update)
             return back()->with('success' , 'Product Uploaded');
         else

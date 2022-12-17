@@ -65,7 +65,7 @@
     </div>
     <div class="form-group">
         <label for="images" class="form-label">Product Picture</label>
-        <input type="file" name="images" class="form-control" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
+        <input type="file" name="images[]" multiple class="form-control" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
         <span class="text-danger">@error('images'){{$message}}@enderror</span>
     </div>
     <br>
