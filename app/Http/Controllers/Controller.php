@@ -74,7 +74,7 @@ class Controller extends BaseController
     public function profile()
     {
         $data['user'] = Users::where('id' , '=' , Session::get('login_id'))->first();
-        return view('profile_page' , $data);
+        return view('profile.profile_page' , $data);
     }
 
     public function logout()
@@ -87,7 +87,7 @@ class Controller extends BaseController
     public function add_product_page()
     {
         $data['user'] = Users::where('id' , '=' , Session::get('login_id'))->first();
-        return view('add_product' , $data);
+        return view('profile.add_product' , $data);
     }
 
     public function add_product(Request $request)
@@ -125,5 +125,11 @@ class Controller extends BaseController
             return back()->with('success' , 'Product Uploaded');
         else
             return back()->with('error' , 'Upload Failed');
+    }
+
+    public function product()
+    {
+        $data['user'] = Users::where('id' , '=' , Session::get('login_id'))->first();
+        return view('profile.product' , $data);
     }
 }
