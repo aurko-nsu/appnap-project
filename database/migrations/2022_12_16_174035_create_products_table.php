@@ -21,6 +21,7 @@ class CreateProductsTable extends Migration
             $table->string('category')->nullable();
             $table->string('brand')->nullable();
             $table->string('price')->nullable();
+            $table->text('picture')->nullable();
             $table->timestamps();
         });
     }

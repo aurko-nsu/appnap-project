@@ -99,6 +99,7 @@ class Controller extends BaseController
             'category' => 'required',
             'brand' => 'required'
         ]);
+        $pic[] = array();
         $product = new Product();
         $product->name = $request->name;
         $product->user_id = Session::get('login_id');
@@ -106,8 +107,6 @@ class Controller extends BaseController
         $product->price = $request->price;
         $product->category = $request->category;
         $product->brand = $request->brand;
-        $update = $product->save();
-        
         if($request->file('images'))
             {
                 $image_path = public_path('product_images'.'/'.Session::get('login_id').'/'.$product->id);
@@ -115,12 +114,25 @@ class Controller extends BaseController
                 {
                     $fileName = $file->getClientOriginalName();
                     $file->move($image_path , $fileName);
-                    Product_picture::create([
-                        'product_id'=>$product->id,
-                        'picture'=>$fileName
-                    ]);
-                }                
+                    $pic[] = $fileName;
+                } 
             }
+        $product->picture = json_encode($pic);
+        $update = $product->save();
+        
+        // if($request->file('images'))
+        //     {
+        //         $image_path = public_path('product_images'.'/'.Session::get('login_id').'/'.$product->id);
+        //         foreach(($request->file('images')) as $file)
+        //         {
+        //             $fileName = $file->getClientOriginalName();
+        //             $file->move($image_path , $fileName);
+        //             Product_picture::create([
+        //                 'product_id'=>$product->id,
+        //                 'picture'=>$fileName
+        //             ]);
+        //         }                
+        //     }
         if($update)
             return back()->with('success' , 'Product Uploaded');
         else
@@ -130,6 +142,10 @@ class Controller extends BaseController
     public function product()
     {
         $data['user'] = Users::where('id' , '=' , Session::get('login_id'))->first();
-        return view('profile.product' , $data);
+        $data['product'] = Product::where('user_id' , '=' , Session::get('login_id'))->get();
+        
+        $image = json_decode($data['product'][0]->picture);
+        return $image[1];
+        // return view('profile.product' , $data);
     }
 }
