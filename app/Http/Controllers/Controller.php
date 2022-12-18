@@ -119,12 +119,12 @@ class Controller extends BaseController
                     $pic[] = $fileName;
                 } 
             }
-        $temp = json_encode($pic);
+        $temp = json_encode($pic , JSON_FORCE_OBJECT);
         $dataUpdate=([
             'picture' => $temp,
         ]);
         Product::where('id' , $product->id)->update($dataUpdate);
-        
+
         if($update)
             return back()->with('success' , 'Product Uploaded');
         else
@@ -136,8 +136,8 @@ class Controller extends BaseController
         $data['user'] = Users::where('id' , '=' , Session::get('login_id'))->first();
         $data['product'] = Product::where('user_id' , '=' , Session::get('login_id'))->get();
         
-        $image = json_decode($data['product'][0]->picture);
-        return $image[0];
-        // return view('profile.product' , $data);
+        // $image = json_decode($data['product'][3]->picture);
+        // return $image;
+        return view('profile.product' , $data);
     }
 }

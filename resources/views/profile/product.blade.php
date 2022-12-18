@@ -4,15 +4,15 @@
 <div class="row">
     <div class="col-md-8">
         <div class="card" style="width: 18rem;">
-            <img src="" class="card-img-top" alt="...">
+            <img src="/product_image/{{$user->id}}/{{$product[0]->id}}/{{json_decode($product[3]->picture)}}" class="card-img-top" alt="product picture">
             <div class="card-body">
-                <h5 class="card-title">{{$product->name}}</h5>
+                <h5 class="card-title">{{$product[0]->name}}</h5>
                 <p class="card-text">
                     <table class="table table-primary">
                         <tbody class="table-primary">
                             <tr class="table-primary">
-                                <td class="table-primary">Brand: {{$product->brand}}</td>
-                                <td class="table-primary">Brand: {{$product->price}}</td>
+                                <td class="table-primary">Brand: {{$product[0]->brand}}</td>
+                                <td class="table-primary">Price: {{$product[0]->price}}</td>
                             </tr>
                         </tbody>
                     </table>
