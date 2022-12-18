@@ -125,19 +125,6 @@ class Controller extends BaseController
         ]);
         Product::where('id' , $product->id)->update($dataUpdate);
         
-        // if($request->file('images'))
-        //     {
-        //         $image_path = public_path('product_images'.'/'.Session::get('login_id').'/'.$product->id);
-        //         foreach(($request->file('images')) as $file)
-        //         {
-        //             $fileName = $file->getClientOriginalName();
-        //             $file->move($image_path , $fileName);
-        //             Product_picture::create([
-        //                 'product_id'=>$product->id,
-        //                 'picture'=>$fileName
-        //             ]);
-        //         }                
-        //     }
         if($update)
             return back()->with('success' , 'Product Uploaded');
         else
