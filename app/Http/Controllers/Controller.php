@@ -99,7 +99,7 @@ class Controller extends BaseController
             'category' => 'required',
             'brand' => 'required'
         ]);
-        $pic[] = array();
+        $pic = array();
         $product = new Product();
         $product->name = $request->name;
         $product->user_id = Session::get('login_id');
@@ -107,6 +107,8 @@ class Controller extends BaseController
         $product->price = $request->price;
         $product->category = $request->category;
         $product->brand = $request->brand;
+        $update = $product->save();
+
         if($request->file('images'))
             {
                 $image_path = public_path('product_images'.'/'.Session::get('login_id').'/'.$product->id);
@@ -117,8 +119,11 @@ class Controller extends BaseController
                     $pic[] = $fileName;
                 } 
             }
-        $product->picture = json_encode($pic);
-        $update = $product->save();
+        $temp = json_encode($pic);
+        $dataUpdate=([
+            'picture' => $temp,
+        ]);
+        Product::where('id' , $product->id)->update($dataUpdate);
         
         // if($request->file('images'))
         //     {
@@ -145,7 +150,7 @@ class Controller extends BaseController
         $data['product'] = Product::where('user_id' , '=' , Session::get('login_id'))->get();
         
         $image = json_decode($data['product'][0]->picture);
-        return $image[1];
+        return $image[0];
         // return view('profile.product' , $data);
     }
 }
