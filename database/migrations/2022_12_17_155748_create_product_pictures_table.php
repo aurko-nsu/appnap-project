@@ -15,6 +15,7 @@ class CreateProductPicturesTable extends Migration
     {
         Schema::create('product_pictures', function (Blueprint $table) {
             $table->id();
+            $table->string('user_id')->nullable();
             $table->string('product_id')->nullable();
             $table->string('picture')->nullable();
             $table->timestamps();

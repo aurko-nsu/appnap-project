@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\DB;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -99,7 +99,7 @@ class Controller extends BaseController
             'category' => 'required',
             'brand' => 'required'
         ]);
-        $pic = array();
+        $temp = $request->file('images');
         $product = new Product();
         $product->name = $request->name;
         $product->user_id = Session::get('login_id');
@@ -107,6 +107,7 @@ class Controller extends BaseController
         $product->price = $request->price;
         $product->category = $request->category;
         $product->brand = $request->brand;
+        $product->picture = $temp[0]->getClientOriginalName();
         $update = $product->save();
 
         if($request->file('images'))
@@ -116,15 +117,13 @@ class Controller extends BaseController
                 {
                     $fileName = $file->getClientOriginalName();
                     $file->move($image_path , $fileName);
-                    $pic[] = $fileName;
+                    Product_picture::create([
+                        'user_id' => Session::get('login_id'),
+                        'product_id' => $product->id,
+                        'picture' => $fileName,
+                    ]);
                 } 
             }
-        $temp = json_encode($pic , JSON_FORCE_OBJECT);
-        $dataUpdate=([
-            'picture' => $temp,
-        ]);
-        Product::where('id' , $product->id)->update($dataUpdate);
-
         if($update)
             return back()->with('success' , 'Product Uploaded');
         else
@@ -135,9 +134,6 @@ class Controller extends BaseController
     {
         $data['user'] = Users::where('id' , '=' , Session::get('login_id'))->first();
         $data['product'] = Product::where('user_id' , '=' , Session::get('login_id'))->get();
-        
-        // $image = json_decode($data['product'][3]->picture);
-        // return $image;
         return view('profile.product' , $data);
     }
 }
