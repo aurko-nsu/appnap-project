@@ -3,10 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Controller;
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
+Route::get('/' , [Controller::class, 'login'])->middleware('alreadyLogged');
 Route::get('/login' , [Controller::class, 'login'])->middleware('alreadyLogged');
 Route::get('/register' , [Controller::class, 'registration'])->middleware('alreadyLogged');
 Route::post('/register-user' , [Controller::class, 'register_user'])->name('register-user');
