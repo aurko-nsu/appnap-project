@@ -43,7 +43,7 @@ class Controller extends BaseController
         $user->password = Hash::make($request->password);
         $registered = $user->save();
         if($registered)
-            return back()->with('success' , 'Successfully registered!');
+            return redirect('login')->with('success' , 'Successfully registered! Now Login.');
         else
             return back()->with('error' , 'Something went wrong!');
     }
