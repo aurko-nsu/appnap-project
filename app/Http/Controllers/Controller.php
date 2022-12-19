@@ -60,7 +60,7 @@ class Controller extends BaseController
                 if(Hash::check($request->password, $user_data->password))
                 {
                     $request->session()->put('login_id' , $user_data->id);
-                    return redirect('profile');
+                    return redirect('product');
                 }
                 else
                 {
