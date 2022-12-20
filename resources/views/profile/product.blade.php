@@ -51,17 +51,26 @@
     white-space: nowrap;
     -webkit-overflow-scrolling: touch;
 }
+
+.no-product-text{
+  color: gray;
+}
 </style>
 
 
 <div class="album py-5 bg-light">
     <div class="container">
       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+        @php
+        $count = 0;
+        @endphp
         @foreach ($product as $data)
+        @php
+        $count = $count + 1;
+        @endphp
         <div class="col">
           <div class="card shadow-sm">
             <img src="{{url('product_images/'.$user->id.'/'.$data->id.'/'.$data->picture.'')}}" class="bd-placeholder-img card-img-top" height="225"></img>
-
             <div class="card-body">
               <p class="card-text">{{$data->name}}</p>
                 <div class="d-flex justify-content-between align-items-center">
@@ -75,6 +84,11 @@
         </div>
         @endforeach
     </div>
+    @php
+      if($count == 0) $no_text_display = '';
+      else $no_text_display = 'none';
+    @endphp
+    <h3 class="text-center no-product-text" style="display: {{$no_text_display}}">No Product Available</h3>
 </div>
 </div>
 

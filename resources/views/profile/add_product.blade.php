@@ -1,6 +1,19 @@
 @extends('profile.frame')
 @section('content')
 
+<style>
+form{
+    width: 60%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    border: 2px solid gray;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    border-radius: 10px;
+    padding: 20px;
+}
+</style>
+<div class="form-div">
 <form method="POST" action="{{route('add-product')}}" enctype="multipart/form-data">
     <h3 class="heading">Add your products</h3>
     {{view('session_alert')}}
@@ -38,5 +51,5 @@
     <br>
     <button type="submit" class="btn btn-block btn-success">Add Product</button>
 </form>
-
+</div>
 @endsection
