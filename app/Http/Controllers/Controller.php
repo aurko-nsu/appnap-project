@@ -140,4 +140,19 @@ class Controller extends BaseController
         $data['product'] = Product::where('user_id' , '=' , Session::get('login_id'))->get();
         return view('profile.product' , $data);
     }
+
+    public function product_detail($id)
+    {
+        $data['product'] = Product::find($id);
+        $data['images'] = DB::table('product_pictures')
+                        ->select('*')
+                        ->where('product_id' , $id)
+                        ->get();
+        
+        $data['user'] = Users::where('id' , '=' , Session::get('login_id'))->first();
+        $data['product_activity'] = 'active';
+        $data['add_product_activity'] = '';
+        // dd($data);
+        return view('profile.product_detail' , $data);
+    }
 }

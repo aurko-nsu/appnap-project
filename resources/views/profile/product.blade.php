@@ -79,7 +79,7 @@
               <p class="card-text">{{$data->name}}</p>
                 <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
-                  <button type="button" class="btn btn-primary">DETAIL</button>
+                  <a target="_blank" href="{{url('/product_detail/'.$data->id)}}"><button type="button" class="btn btn-primary">DETAIL</button></a>
                 </div>
                 <small class="text-muted">Price: ${{$data->price}}</small>
               </div>

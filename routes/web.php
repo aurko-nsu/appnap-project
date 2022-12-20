@@ -14,3 +14,4 @@ Route::post('/add_product' , [Controller::class, 'add_product'])->name('add-prod
 Route::get('/product' , [Controller::class, 'product'])->name('product')->middleware('isLoggedIn');
 Route::get('/profile' , [Controller::class, 'profile'])->name('profile')->middleware('isLoggedIn');
 Route::get('/logout' , [Controller::class, 'logout']);
+Route::get('/product_detail/{id}' , [Controller::class, 'product_detail']);
