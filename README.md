@@ -4,7 +4,7 @@
 
 ## Steps to run the App
 
-Follow the steps to run Emo Cal:
+Follow the steps to run this app:
 
 - Download the project file as zip from github in `\xampp\htdocs` directory of your machine. Or clone the github repository using Git Bash.
 ```
