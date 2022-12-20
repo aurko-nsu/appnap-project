@@ -55,6 +55,10 @@
 .no-product-text{
   color: gray;
 }
+.card-img-top{
+  width: 60% !important;
+  margin: 0 auto;
+}
 </style>
 
 
