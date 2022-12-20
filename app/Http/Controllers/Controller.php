@@ -86,6 +86,8 @@ class Controller extends BaseController
 
     public function add_product_page()
     {
+        $data['product_activity'] = '';
+        $data['add_product_activity'] = 'active';
         $data['user'] = Users::where('id' , '=' , Session::get('login_id'))->first();
         return view('profile.add_product' , $data);
     }
@@ -132,6 +134,8 @@ class Controller extends BaseController
 
     public function product()
     {
+        $data['product_activity'] = 'active';
+        $data['add_product_activity'] = '';
         $data['user'] = Users::where('id' , '=' , Session::get('login_id'))->first();
         $data['product'] = Product::where('user_id' , '=' , Session::get('login_id'))->get();
         return view('profile.product' , $data);

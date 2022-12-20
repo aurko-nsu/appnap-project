@@ -15,13 +15,10 @@
         <div class="collapse navbar-collapse" id="navbarText">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="product">Products</a>
+            <a class="nav-link {{$product_activity}}" aria-current="page" href="product">Products</a>
             </li>
             <li class="nav-item">
-            <a class="nav-link" href="add_product">Add Products</a>
-            </li>
-            <li class="nav-item">
-            <a class="nav-link" href="profile">Profile</a>
+            <a class="nav-link {{$add_product_activity}}" href="add_product">Add Products</a>
             </li>
             <li class="nav-item">
             <a class="nav-link" href="logout">Logout</a>
