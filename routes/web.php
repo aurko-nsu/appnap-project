@@ -15,3 +15,5 @@ Route::get('/product' , [Controller::class, 'product'])->name('product')->middle
 Route::get('/profile' , [Controller::class, 'profile'])->name('profile')->middleware('isLoggedIn');
 Route::get('/logout' , [Controller::class, 'logout']);
 Route::get('/product_detail/{id}' , [Controller::class, 'product_detail']);
+
+Route::get('/verify/{token}' , [Controller::class, 'verify_user'])->name('verify');

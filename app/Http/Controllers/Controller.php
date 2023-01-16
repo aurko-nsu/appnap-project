@@ -12,6 +12,9 @@ use App\Models\Product;
 use App\Models\Product_picture;
 use Hash;
 use Session;
+use Carbon\Carbon;
+use Illuminate\Support\Str;
+use App\Mail\VerificationEmail;
 
 class Controller extends BaseController
 {
@@ -37,15 +40,31 @@ class Controller extends BaseController
             'password' => 'required|min:5',
         ]);
 
-        $user = new Users();
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->password = Hash::make($request->password);
-        $registered = $user->save();
-        if($registered)
-            return redirect('login')->with('success' , 'Successfully registered! Now Login.');
-        else
-            return back()->with('error' , 'Something went wrong!');
+        // $user = new Users();
+        // $user->name = $request->name;
+        // $user->email = $request->email;
+        // $user->password = Hash::make($request->password);
+        // $registered = $user->save();
+
+        $user = Users::create([
+            'name' => trim($request->input('name')),
+            'email' => strtolower($request->input('email')),
+            'password' => bcrypt($request->input('password')),
+            'email_verification_token' => Str::random(6)
+        ]);
+            
+        Mail::to($user->email)->send(new VerificationEmail($user));
+
+        session()->flash('message', 'Please check your email to activate your account');
+       
+        return redirect()->back();
+
+
+
+        // if($registered)
+        //     return redirect('login')->with('success' , 'Successfully registered! Now Login.');
+        // else
+        //     return back()->with('error' , 'Something went wrong!');
     }
 
     public function login_user(Request $request)
@@ -154,5 +173,30 @@ class Controller extends BaseController
         $data['add_product_activity'] = '';
         // dd($data);
         return view('profile.product_detail' , $data);
+    }
+
+    public function VerifyEmail($token = null)
+    {
+    	if($token == null) {
+    		session()->flash('message', 'Invalid Login attempt');
+    		return redirect()->route('login');
+    	}
+
+       $user = User::where('email_verification_token',$token)->first();
+       if($user == null )
+       {
+       	  session()->flash('message', 'Invalid Login attempt');
+          return redirect()->route('login');
+       }
+
+       $user->update([
+          'email_verified' => 1,
+          'email_verified_at' => Carbon::now(),
+          'email_verification_token' => ''
+
+       ]);
+       
+       session()->flash('message', 'Your account is activated, you can log in now');
+       return redirect()->route('login');
     }
 }
