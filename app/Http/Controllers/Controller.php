@@ -15,6 +15,7 @@ use Session;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
 use App\Mail\VerificationEmail;
+use Mail;
 
 class Controller extends BaseController
 {
@@ -198,5 +199,23 @@ class Controller extends BaseController
        
        session()->flash('message', 'Your account is activated, you can log in now');
        return redirect()->route('login');
+    }
+
+    public function send_mail()
+    {
+        $data = [
+            "subject"=>"Testing Mail",
+            "body"=>"Hello friends, Welcome to Cambo Tutorial Mail Delivery!"
+            ];
+          // MailNotify class that is extend from Mailable class.
+          try
+          {
+            Mail::to('mahmudur@appnap.io')->send(new VerificationEmail($data));
+            return response()->json(['Great! Successfully send in your mail']);
+          }
+          catch(Exception $e)
+          {
+            return response()->json(['Sorry! Please try again latter']);
+          }
     }
 }

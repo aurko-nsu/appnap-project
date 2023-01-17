@@ -11,15 +11,18 @@ class VerificationEmail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $user;
+    public $data=[];
 
-    public function __construct($user)
+    public function __construct($data)
     {
-        $this->user = $user;
+        $this->data = $data;
     }
 
     public function build()
     {
-        return $this->view('mail/verify_mail');
+        return $this->from('shieldz.co@gmail.com', 'Testing')
+                    ->subject($this->data["subject"])
+                    ->view('mail.verify_mail')
+                    ->with("data",$this->data);
     }
 }
